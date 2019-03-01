@@ -1,0 +1,48 @@
+<% i=0 %>
+  <% @database.each do |article| %>
+    <div class="card mb-4 w-100 shadow">
+      <div class="row no-gutters border-top border-info">
+
+        <div class="col-md-2 ">
+          <img src="<%= article[:photo]%>" class="card-img-top" style="height:100%;" onerror="this.src='https://www.staticwhich.co.uk/static/images/products/no-image/no-image-available.png'"/>
+        </div>
+
+        <div class="col-md-10">
+          <div class="d-flex justify-content-between card-header">
+            <div class="text-uppercase font-weight-bold">
+              <%= article[:title] %>
+            </div>
+            <% unless article[:rating].nil? %>
+              <div> rating:
+                <% article[:rating].to_i.times do %>
+                <i class="fas fa-star"></i>
+                <%end %>
+              </div>
+            <% else %>
+              <p>not rated yet</p>
+            <%end %>
+          </div>
+          <div class="card card-body border-0" style="width: auto">
+          <p class="card-text"> <%= article[:content] %> </p>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <button class="btn btn-light btn-block btn-sm" type="button" data-toggle="collapse" data-target="#articleComments<%=i%>">
+          show/hide comments <span class="badge badge-info badge-pill"><%= @comments[i].count%> </span>
+          </button>
+          <div class="collapse" id="articleComments<%=i%>">
+            <ul class="list-group list-group-flush">
+              <% @comments[i].each do |comment| %>
+              <li class="list-group-item"> " <%=comment %> "</li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <% i+=1 %>
+  <% end %>
+
+
