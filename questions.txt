@@ -4,7 +4,7 @@ These can be done in any language you're comfortable with
 1. Give a regular expression that detects hexadecimal numbers in a text.
 For example, ‘0x0f4’, ‘0acdadecf822eeff32aca5830e438cb54aa722e3’, ‘8BADF00D’ should be detected.
 
->
+> /[0-9a-fA-F]/
 
 2.Here is the pseudo code of a function that is defined recursively:
 -  f(0) = 1;
@@ -12,7 +12,20 @@ For example, ‘0x0f4’, ‘0acdadecf822eeff32aca5830e438cb54aa722e3’, ‘8BA
 -  f(n)= 3 * f(n-1) - f(n-2);
 Provide an implementation for ‘f’. Bonus points for a non recursive implementation.
 
->
+> def f(n)
+    if n == 0
+      return 1
+    elsif n == 1
+      return 3
+    else
+      resultarray = [1, 3]
+      (2..n).each do |i|
+        resultarray[i] = 3 * resultarray[i-1] - resultarray[i-2]
+      end
+      return resultarray[n]
+    end
+  end
+
 
 BACKEND - MySQL
 
@@ -24,19 +37,61 @@ BACKEND - MySQL
   - email,
   - created_at
 
->
+> CREATE TABLE users
+(
+    id INT PRIMARY KEY NOT NULL,
+    firstname VARCHAR(100),
+    lastname VARCHAR(100),
+    gender VARCHAR(1),
+    date_naissance DATE,
+    email VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+)
 
 2. Write a query on the previous table that lists the 10 most recently added users.
 
->
+>  SELECT * FROM users
+ ORDER BY created_at DESC
+ LIMIT 10
 
 GENERAL - Creativity
 Si vous êtes Français, vous pouvez répondre en Français.
 
 1. Describe the color yellow to someone who is blind
 
->
+> recette gateau jaune pour gens aveugles:
+-500g de beurre à température ambiante
+-6 jaunes d'oeufs
+-un grand verre d'huile d'olive
+-3 bananes écrasées
+-100g de polenta fine
+-du fromage rapé
+-une pincée de curcuma
+-zestes de citron
+
+mélanger tout et cuire au soleil sous une loupe pendant 36h
+
+déguster dans un champ de colza vers fin avril, accompagné d'un verre de pineau des charentes ou d'orangina pour une version plus légère. fermer les yeux même si vous êtes aveugle et laissez la couleur jaune vous envahir.bon apétit.
+
 
 3. Describe the data model you’d use for a Battleship game. What are the key objects? How will your code use them?
 
->
+> trois modèles: Grille, Joueur, Jeu
+
+1) le Modèle Grille liste les cases existantes (de A1 à J10 par exemple) dans un array, et chaque case est soit occupée par un bateau, soit vide (boolean).
+un certain nombre bateaux sont générés via .sample selon le nombre de cases adjacentes qu'ils doivent occuper. On peut definir ce nombre de cases adjacentes dans des variables générales en debut de programme.
+ex :  SOUS_MARIN = 3
+      PORTE_AVION = 5
+      etc...
+une case de la grille qui a été touchée voit son statut changer (boolean "jouée" ou "non jouée")
+
+2) le Modele Joueur, qui a un nom et "prompte" le user via la console ou la view. il a une méthode "win?" qui renvoie "true" ou "false" selon que tous les bateaux du joueur précisé ont été coulés ou non..
+
+3) le Modele Jeu, qui s'initialise en associant 2 instances de Joueur à 2 instances de Grille.
+methodes:
+- "coup" qui renvoie une case non encore jouée sur la grille.
+- "touché? (nom_du_bateau)" qui retourne "true" ou "false" selon que le coup tombe sur une case occupée par le bateau précisé en paramètre.
+- "coulé? (nom_du_bateau)" qui retourne "true" ou "false" selon que le bateau est entièrement touché ou non.
+
+
+

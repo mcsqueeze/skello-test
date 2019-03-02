@@ -100,7 +100,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport
   bootstrap
   sinatra
   sinatra-contrib
